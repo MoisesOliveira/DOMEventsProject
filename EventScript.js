@@ -6,12 +6,18 @@ window.addEventListener("load", ()=>{
     //when true, allow the draw function works
     let painting = false;
     
-    //change the value of painting variable
+     //change the value of painting variable
     const colorInput = document.getElementById("colorInput");
     let drawColor;
 
+    const sizeInput = document.getElementById("sizeInput");
+    let strokeSize;
+
     function changeColor(){
         drawColor = colorInput.value;
+    }
+    function changeSize(){
+        strokeSize = sizeInput.value;
     }
 
     function startPosition(e){
@@ -30,20 +36,21 @@ window.addEventListener("load", ()=>{
         };
         if(!painting)return;
         changeColor();
-        context.lineWidth = 1.5;
+        changeSize();
+        context.lineWidth = strokeSize;
         context.strokeStyle = drawColor;
         context.lineCap = 'round';
-        context.imageS
         context.lineTo(coord.x,coord.y);
         context.stroke();
         context.beginPath();
         context.moveTo(coord.x,coord.y);
     }
     //mouse events
+    sizeInput.addEventListener("ratechange",changeSize)
     colorInput.addEventListener("click",changeColor); 
     canvas.addEventListener("mousedown",startPosition);
     canvas.addEventListener("mouseup",endPosition);
     canvas.addEventListener("mousemove",drawLines);
-    
+   
 
 })
