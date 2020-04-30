@@ -1,11 +1,19 @@
 window.addEventListener("load", ()=>{
     const canvas = document.getElementById("pointCanvas");
     const context = canvas.getContext("2d");
-    const colorInput = document.getElementById("colorInput");
+    
+    
     //when true, allow the draw function works
     let painting = false;
-    let drawColor = colorInput.value; 
+    
     //change the value of painting variable
+    const colorInput = document.getElementById("colorInput");
+    let drawColor;
+
+    function changeColor(){
+        drawColor = colorInput.value;
+    }
+
     function startPosition(e){
         painting = true;
         drawLines(e);
@@ -21,6 +29,7 @@ window.addEventListener("load", ()=>{
             'y': (e.clientY - this.offsetTop)*this.height/this.clientHeight
         };
         if(!painting)return;
+        changeColor();
         context.lineWidth = 1.5;
         context.strokeStyle = drawColor;
         context.lineCap = 'round';
@@ -30,9 +39,11 @@ window.addEventListener("load", ()=>{
         context.beginPath();
         context.moveTo(coord.x,coord.y);
     }
-    //mouse events 
+    //mouse events
+    colorInput.addEventListener("click",changeColor); 
     canvas.addEventListener("mousedown",startPosition);
     canvas.addEventListener("mouseup",endPosition);
     canvas.addEventListener("mousemove",drawLines);
+    
 
 })
